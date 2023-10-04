@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Pages/Home';
+import MovieDetails from './Pages/MovieDetails';
+import NotFound from './Pages/NotFound';
+import Navbar from './Components/Navbar/Navbar';
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState("Batman");
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar onSearch={handleSearch} />
+      <Routes>
+        <Route path="/home" element={<Home searchQuery={searchQuery} searchMovies={handleSearch} />} />
+        <Route path="/movie/:id" element={<MovieDetails searchQuery={searchQuery} searchMovies={handleSearch} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+    </Router>
   );
 }
 
