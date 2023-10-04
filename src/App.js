@@ -15,11 +15,12 @@ function App() {
     <Router>
       <Navbar onSearch={handleSearch} />
       <Routes>
-        <Route path="/home" element={<Home searchQuery={searchQuery} searchMovies={handleSearch} />} />
+        {["/", "/home"].map((path, index) =>
+          <Route path={path} element={<Home searchQuery={searchQuery} searchMovies={handleSearch} />} key={index} />
+        )}
         <Route path="/movie/:id" element={<MovieDetails searchQuery={searchQuery} searchMovies={handleSearch} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-
     </Router>
   );
 }
